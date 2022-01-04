@@ -9,24 +9,25 @@ export class PaymentDetailService {
 
   constructor(private http: HttpClient) { }
 
-  readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
+  //readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
+  public static uri: string = "/api"
   formData: PaymentDetail = new PaymentDetail();
   list: PaymentDetail[];
 
   postPaymentDetail() {
-    return this.http.post(this.baseURL, this.formData);
+    return this.http.post(PaymentDetailService.uri, this.formData);
   }
 
   putPaymentDetail() {
-    return this.http.put(`${this.baseURL}/${this.formData.paymentDetailId}`, this.formData);
+    return this.http.put(`${PaymentDetailService.uri}/${this.formData.paymentDetailId}`, this.formData);
   }
 
   deletePaymentDetail(id: number) {
-    return this.http.delete(`${this.baseURL}/${id}`);
+    return this.http.delete(`${PaymentDetailService.uri}/${id}`);
   }
 
   refreshList() {
-    this.http.get(this.baseURL)
+    this.http.get(PaymentDetailService.uri)
       .toPromise()
       .then(res =>this.list = res as PaymentDetail[]);
   }
