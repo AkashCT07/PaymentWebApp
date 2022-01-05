@@ -46,7 +46,8 @@
 
 
       var environment = {
-        production: false
+        production: false,
+        apiBaseUri: "https://localhost:5001/api/PaymentDetails"
       };
       /*
        * For easier debugging in development mode, you can import the following file
@@ -453,6 +454,41 @@
       })();
       /***/
 
+    },
+
+    /***/
+    "Vx+w":
+    /*!***************************!*\
+      !*** ./src/app/config.ts ***!
+      \***************************/
+
+    /*! exports provided: Config */
+
+    /***/
+    function VxW(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "Config", function () {
+        return Config;
+      });
+      /* harmony import */
+
+
+      var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! src/environments/environment */
+      "AytR");
+
+      var Config = function Config() {
+        _classCallCheck(this, Config);
+      };
+
+      Config.api = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].apiBaseUri; //"https://localhost:5001/api/";
+
+      /***/
     },
 
     /***/
@@ -894,7 +930,13 @@
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../config */
+      "Vx+w");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/common/http */
       "tk/3");
 
@@ -902,44 +944,48 @@
         function PaymentDetailService(http) {
           _classCallCheck(this, PaymentDetailService);
 
-          this.http = http;
+          this.http = http; //readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
+          //public static uri: string = "/api"
+
           this.formData = new _payment_detail_model__WEBPACK_IMPORTED_MODULE_1__["PaymentDetail"]();
         }
 
         _createClass(PaymentDetailService, [{
           key: "postPaymentDetail",
           value: function postPaymentDetail() {
-            return this.http.post(PaymentDetailService.uri, this.formData);
+            return this.http.post(this.baseUri, this.formData);
           }
         }, {
           key: "putPaymentDetail",
           value: function putPaymentDetail() {
-            return this.http.put("".concat(PaymentDetailService.uri, "/").concat(this.formData.paymentDetailId), this.formData);
+            return this.http.put("".concat(this.baseUri, "/").concat(this.formData.paymentDetailId), this.formData);
           }
         }, {
           key: "deletePaymentDetail",
           value: function deletePaymentDetail(id) {
-            return this.http["delete"]("".concat(PaymentDetailService.uri, "/").concat(id));
+            return this.http["delete"]("".concat(this.baseUri, "/").concat(id));
           }
         }, {
           key: "refreshList",
           value: function refreshList() {
             var _this4 = this;
 
-            this.http.get(PaymentDetailService.uri).toPromise().then(function (res) {
+            this.http.get(this.baseUri).toPromise().then(function (res) {
               return _this4.list = res;
             });
+          }
+        }, {
+          key: "baseUri",
+          get: function get() {
+            return "".concat(_config__WEBPACK_IMPORTED_MODULE_2__["Config"].api);
           }
         }]);
 
         return PaymentDetailService;
-      }(); //readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
-
-
-      PaymentDetailService.uri = "/api";
+      }();
 
       PaymentDetailService.ɵfac = function PaymentDetailService_Factory(t) {
-        return new (t || PaymentDetailService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]));
+        return new (t || PaymentDetailService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]));
       };
 
       PaymentDetailService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -957,7 +1003,7 @@
           }]
         }], function () {
           return [{
-            type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+            type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]
           }];
         }, null);
       })();

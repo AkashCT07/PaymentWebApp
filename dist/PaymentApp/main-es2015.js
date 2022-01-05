@@ -26,7 +26,8 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const environment = {
-    production: false
+    production: false,
+    apiBaseUri: "https://localhost:5001/api/PaymentDetails"
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -218,6 +219,25 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
                 styleUrls: ['./app.component.css']
             }]
     }], null, null); })();
+
+
+/***/ }),
+
+/***/ "Vx+w":
+/*!***************************!*\
+  !*** ./src/app/config.ts ***!
+  \***************************/
+/*! exports provided: Config */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+
+class Config {
+}
+Config.api = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].apiBaseUri; //"https://localhost:5001/api/";
 
 
 /***/ }),
@@ -437,7 +457,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PaymentDetailService", function() { return PaymentDetailService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _payment_detail_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./payment-detail.model */ "Dtd7");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config */ "Vx+w");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 
 
@@ -445,33 +467,36 @@ __webpack_require__.r(__webpack_exports__);
 class PaymentDetailService {
     constructor(http) {
         this.http = http;
+        //readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
+        //public static uri: string = "/api"
         this.formData = new _payment_detail_model__WEBPACK_IMPORTED_MODULE_1__["PaymentDetail"]();
     }
     postPaymentDetail() {
-        return this.http.post(PaymentDetailService.uri, this.formData);
+        return this.http.post(this.baseUri, this.formData);
     }
     putPaymentDetail() {
-        return this.http.put(`${PaymentDetailService.uri}/${this.formData.paymentDetailId}`, this.formData);
+        return this.http.put(`${this.baseUri}/${this.formData.paymentDetailId}`, this.formData);
     }
     deletePaymentDetail(id) {
-        return this.http.delete(`${PaymentDetailService.uri}/${id}`);
+        return this.http.delete(`${this.baseUri}/${id}`);
     }
     refreshList() {
-        this.http.get(PaymentDetailService.uri)
+        this.http.get(this.baseUri)
             .toPromise()
             .then(res => this.list = res);
     }
+    get baseUri() {
+        return `${_config__WEBPACK_IMPORTED_MODULE_2__["Config"].api}`;
+    }
 }
-//readonly baseURL = 'http://localhost:43407/api/PaymentDetails'
-PaymentDetailService.uri = "/api";
-PaymentDetailService.ɵfac = function PaymentDetailService_Factory(t) { return new (t || PaymentDetailService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
+PaymentDetailService.ɵfac = function PaymentDetailService_Factory(t) { return new (t || PaymentDetailService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
 PaymentDetailService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: PaymentDetailService, factory: PaymentDetailService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](PaymentDetailService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }]; }, null); })();
 
 
 /***/ }),
